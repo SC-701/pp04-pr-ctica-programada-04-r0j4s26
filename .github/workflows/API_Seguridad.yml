@@ -8,8 +8,6 @@ env:
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'Seguridad/Seguridad.API/**'
   workflow_dispatch:
 
 permissions:
@@ -30,30 +28,19 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Forzar Configuración de NuGet (Como en HelloWorld)
+      - name: Autenticar NuGet (Modo Linux Clear Text)
         run: |
           cd "Seguridad/Seguridad.API"
-          # Creamos un config limpio que no herede errores de carpetas locales
-          echo "<?xml version='1.0' encoding='utf-8'?>
-          <configuration>
-            <packageSources>
-              <clear />
-              <add key='github' value='https://nuget.pkg.github.com/SC-701/index.json' />
-              <add key='nuget.org' value='https://api.nuget.org/v3/index.json' />
-            </packageSources>
-            <packageSourceCredentials>
-              <github>
-                <add key='Username' value='${{ github.actor }}' />
-                <add key='Password' value='${{ secrets.PAQUETESTOKEN }}' />
-              </github>
-            </packageSourceCredentials>
-          </configuration>" > nuget.config
+          dotnet nuget add source "https://nuget.pkg.github.com/SC-701/index.json" \
+            --name "github" \
+            --username "${{ github.actor }}" \
+            --password "${{ secrets.PAQUETESTOKEN }}" \
+            --store-password-in-clear-text
 
       - name: Restaurar dependencias
         run: |
           cd "Seguridad/Seguridad.API"
-          # Usamos el config que acabamos de crear para que no use rutas viejas
-          dotnet restore "API/API.csproj" --configfile nuget.config
+          dotnet restore "API/API.csproj"
 
       - name: Compilar
         run: |
