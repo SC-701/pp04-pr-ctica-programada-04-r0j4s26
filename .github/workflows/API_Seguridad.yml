@@ -35,7 +35,7 @@ jobs:
             "https://nuget.pkg.github.com/SC-701/index.json" \
             --name "Paquetes" \
             --username "${{ github.actor }}" \
-            --password "${{ secrets.PaquetesTOKEN }}" \
+            --password "${{ secrets.PAQUETESTOKEN }}" \
             --store-password-in-clear-text
 
       - name: Restaurar dependencias
