@@ -9,18 +9,18 @@
 # For more information on GitHub Actions for Azure: https://github.com/Azure/Actions
 # For more information on SQL Database deployment: https://docs.microsoft.com/en-us/azure/azure-sql/database/
 
-name: Deploy Vehiculo Database to Azure SQL
+name: Deploy Seguridad Database to Azure SQL
 
 env:
   AZURE_SQL_SERVER: sebasrojaslunessc701.database.windows.net    # Tu servidor SQL de Azure (ejemplo: vehiculo-db-server.database.windows.net)
   AZURE_SQL_DATABASE: free-sql-db-9501250    # Nombre de tu base de datos
-  DACPAC_PATH: 'Vehiculo.API/BD/bin/Release/BD.dacpac'
+  DACPAC_PATH: 'Seguridad/Seguridad.API/BD/bin/Release/BD.dacpac'
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - 'Vehiculo.API/BD/**'
+      - 'Seguridad/Seguridad.API/BD/**'
   workflow_dispatch:
 
 permissions:
@@ -42,11 +42,11 @@ jobs:
         uses: NuGet/setup-nuget@v1
 
       - name: Restore NuGet packages
-        run: nuget restore "Vehiculo.API/Vehiculo.API.sln"
+        run: nuget restore "Seguridad/Seguridad.API/Seguridad.sln"
 
       - name: Build Database Project
         run: |
-          msbuild "Vehiculo.API/BD/BD.sqlproj" /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath="./bin/Release/"
+          msbuild "Seguridad/Seguridad.API/BD/BD.sqlproj" /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath="./bin/Release/"
         shell: cmd
 
       - name: Verify DACPAC file exists
