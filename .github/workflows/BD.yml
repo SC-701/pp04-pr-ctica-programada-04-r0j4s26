@@ -25,6 +25,7 @@ on:
 
 permissions:
   contents: read
+  packages: read
 
 jobs:
   build-and-deploy-database:
@@ -41,6 +42,9 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1
 
+      - name: Agregar paquetes Source privado
+        run: nuget sources add -name "Paquetes" -Source "https://nuget.pkg.github.com/SC-701/index.json"
+        
       - name: Restore NuGet packages
         run: nuget restore "Seguridad/Seguridad.API/Seguridad.sln"
 
