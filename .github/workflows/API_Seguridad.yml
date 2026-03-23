@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: read
+  packages: read
 
 jobs:
   build-and-deploy:
@@ -24,23 +25,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup .NET 8
+      - name: Setup .NET 8 y Autenticar NuGet
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-
-      - name: Configurar NuGet feed privado
-        run: |
-          dotnet nuget add source \
-            "https://nuget.pkg.github.com/SC-701/index.json" \
-            --name "Paquetes" \
-            --username "${{ github.actor }}" \
-            --password "${{ secrets.PAQUETESTOKEN }}" \
-            --store-password-in-clear-text
+          source-url: 'https://nuget.pkg.github.com/SC-701/index.json'
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.PAQUETESTOKEN }}
 
       - name: Restaurar dependencias
-        env:
-          PAQUETESTOKEN: ${{ secrets.PAQUETESTOKEN }}
         run: |
           cd "Seguridad/Seguridad.API"
           dotnet restore "Abstracciones/Abstracciones.csproj"
