@@ -39,6 +39,8 @@ jobs:
             --store-password-in-clear-text
 
       - name: Restaurar dependencias
+        env:
+          PAQUETESTOKEN: ${{ secrets.PAQUETESTOKEN }}
         run: |
           cd "Seguridad/Seguridad.API"
           dotnet restore "Abstracciones/Abstracciones.csproj"
