@@ -8,11 +8,12 @@ env:
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'Seguridad/Seguridad.API/**'
   workflow_dispatch:
 
 permissions:
   contents: read
-  packages: read
 
 jobs:
   build-and-deploy:
@@ -28,11 +29,11 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Autenticar NuGet (Modo Linux Clear Text)
+      - name: Configurar NuGet feed privado
         run: |
-          cd "Seguridad/Seguridad.API"
-          dotnet nuget add source "https://nuget.pkg.github.com/SC-701/index.json" \
-            --name "github" \
+          dotnet nuget add source \
+            "https://nuget.pkg.github.com/SC-701/index.json" \
+            --name "Paquetes" \
             --username "${{ github.actor }}" \
             --password "${{ secrets.PAQUETESTOKEN }}" \
             --store-password-in-clear-text
@@ -40,6 +41,11 @@ jobs:
       - name: Restaurar dependencias
         run: |
           cd "Seguridad/Seguridad.API"
+          dotnet restore "Abstracciones/Abstracciones.csproj"
+          dotnet restore "DA/DA.csproj"
+          dotnet restore "Flujo/Flujo.csproj"
+          dotnet restore "Reglas/Reglas.csproj"
+          dotnet restore "Helpers/Helpers.csproj"
           dotnet restore "API/API.csproj"
 
       - name: Compilar
