@@ -43,7 +43,7 @@ jobs:
         uses: NuGet/setup-nuget@v1
 
       - name: Agregar paquetes Source privado
-        run: nuget sources add -name "Paquetes" -Source "https://nuget.pkg.github.com/SC-701/index.json"
+        run: dotnet nuget add source "https://nuget.pkg.github.com/SC-701/index.json" --name "Paquetes" --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
         
       - name: Restore NuGet packages
         run: nuget restore "Seguridad/Seguridad.API/Seguridad.sln"
