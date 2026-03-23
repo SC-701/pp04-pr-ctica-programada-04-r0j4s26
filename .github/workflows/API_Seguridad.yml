@@ -55,7 +55,7 @@ jobs:
 
       - name: Publicar (dotnet publish)
         run: |
-          cd "Ejemplos/Seguridad/Seguridad.API"
+          cd "Seguridad/Seguridad.API"
           dotnet publish "API/API.csproj" \
             --configuration Release \
             --no-build \
