@@ -14,7 +14,6 @@ on:
 
 permissions:
   contents: read
-  packages: read
 
 jobs:
   build-and-deploy:
@@ -33,10 +32,10 @@ jobs:
       - name: Configurar NuGet feed privado
         run: |
           dotnet nuget add source \
-            "https://nuget.pkg.github.com/r0j4s26/index.json" \
+            "https://nuget.pkg.github.com/SC-701/index.json" \
             --name "Paquetes" \
             --username "${{ github.actor }}" \
-            --password "${{ secrets.PAQUETESTOKEN }}" \
+            --password "${{ secrets.TokenPaquetes }}" \
             --store-password-in-clear-text
 
       - name: Restaurar dependencias
