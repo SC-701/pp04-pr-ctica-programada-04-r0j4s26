@@ -12,8 +12,8 @@
 name: Deploy Seguridad Database to Azure SQL
 
 env:
-  AZURE_SQL_SERVER: sebasrojaslunessc701.database.windows.net    # Tu servidor SQL de Azure (ejemplo: vehiculo-db-server.database.windows.net)
-  AZURE_SQL_DATABASE: free-sql-db-9501250    # Nombre de tu base de datos
+  AZURE_SQL_SERVER: darvsc701.database.windows.net
+  AZURE_SQL_DATABASE: Vehiculos
   DACPAC_PATH: 'Seguridad/Seguridad.API/BD/bin/Release/BD.dacpac'
 
 on:
@@ -25,6 +25,7 @@ on:
 
 permissions:
   contents: read
+  packages: read
 
 jobs:
   build-and-deploy-database:
@@ -40,6 +41,25 @@ jobs:
 
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1
+
+      - name: Create NuGet.Config with GitHub Packages credentials
+        run: |
+          $content = @"
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+            <packageSources>
+              <add key="github" value="https://nuget.pkg.github.com/SC-701/index.json" />
+            </packageSources>
+            <packageSourceCredentials>
+              <github>
+                <add key="Username" value="${{ github.actor }}" />
+                <add key="ClearTextPassword" value="${{ secrets.PaquetesTOKEN }}" />
+              </github>
+            </packageSourceCredentials>
+          </configuration>
+          "@
+          $content | Out-File -FilePath "Seguridad/Seguridad.API/NuGet.Config" -Encoding utf8
+        shell: powershell
 
       - name: Restore NuGet packages
         run: nuget restore "Seguridad/Seguridad.API/Seguridad.sln"
