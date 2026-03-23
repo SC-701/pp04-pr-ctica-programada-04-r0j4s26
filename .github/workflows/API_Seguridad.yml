@@ -32,7 +32,7 @@ jobs:
       - name: Configurar NuGet feed privado
         run: |
           dotnet nuget add source \
-            "https://nuget.pkg.github.com/SC-701/index.json" \
+            "https://nuget.pkg.github.com/r0j4s26/index.json" \
             --name "Paquetes" \
             --username "${{ github.actor }}" \
             --password "${{ secrets.PAQUETESTOKEN }}" \
