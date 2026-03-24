@@ -1,0 +1,47 @@
+﻿@page
+@model Web.Pages.Vehiculos.DetalleModel
+@{
+}
+<header class="subhead">
+    <div class="container">
+        <div class="masthead-subheading">SC-701: Programación Web Avanzada</div>
+        <div class="masthead-heading text-uppercase">Examen vehiculo</div>
+    </div>
+</header>
+<section class="page-section" id="services">
+    <div class="container" style="max-width: fit-content;">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Detalle de la vehiculo</h2>
+            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+        </div>
+        <div class="card mb-3 w-100 shadow-sm">
+            <div class="row g-0">
+                <div class="col-md-4" style="min-width: fit-content;">
+                    <img src="~/assets/img/car.png" class="img-fluid vw-3 p-4 rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelo => modelo.vehiculo.Marca) @Html.DisplayFor(modelo => modelo.vehiculo.Modelo)</h5>
+                        <p class="card-text">
+                            <div>
+                                <b>@Html.DisplayNameFor(modelo => modelo.vehiculo.Placa): </b>
+                                @Html.DisplayFor(modelo => modelo.vehiculo.Placa)
+                            </div>
+                            <div>
+                                <b>@Html.DisplayNameFor(modelo => modelo.vehiculo.Anio):</b>
+                                @Html.DisplayFor(modelo => modelo.vehiculo.Anio)
+                            </div>
+                            <div>
+                                <b>@Html.DisplayNameFor(modelo => modelo.vehiculo.Precio):</b>
+                                @Html.DisplayFor(modelo => modelo.vehiculo.Precio)
+                            </div>
+                        </p>
+                        <p class="card-text"><small class="text-muted">@Html.DisplayFor(modelo => modelo.vehiculo.CorreoPropietario) / @Html.DisplayFor(modelo => modelo.vehiculo.TelefonoPropietario)</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="btn btn-primary" asp-page="./Index">Regresar</a>
+        <a class="btn btn-warning" asp-page="./Editar" asp-route-id="@Model.vehiculo.Id">Editar</a>
+    </div>
+</section>

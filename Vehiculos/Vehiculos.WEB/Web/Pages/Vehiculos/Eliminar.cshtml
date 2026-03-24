@@ -1,0 +1,92 @@
+﻿@page
+@model Web.Pages.Vehiculos.EliminarModel
+@{
+}
+<header class="subhead">
+    <div class="container">
+        <div class="masthead-subheading">SC-701: Programación Web Avanzada</div>
+        <div class="masthead-heading text-uppercase">Examen vehiculo</div>
+    </div>
+</header>
+<section class="page-section bg-light" id="principal">
+    <div class="container">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Eliminar vehiculo</h2>
+                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+            </div>
+
+            <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto ">
+                <form method="post">
+                    <row>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.vehiculo.Marca):
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.vehiculo.Marca)
+                        </dd>
+                    </row>
+                    <row>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.vehiculo.Modelo):
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.vehiculo.Modelo)
+                        </dd>
+                    </row>
+                    <row>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.vehiculo.Placa):
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.vehiculo.Placa)
+                        </dd>
+                    </row>
+                    <row>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.vehiculo.Anio):
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.vehiculo.Anio)
+                        </dd>
+                    </row>
+                    <row>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.vehiculo.Color):
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.vehiculo.Color)
+                        </dd>
+                    </row>               <row>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.vehiculo.CorreoPropietario):
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.vehiculo.CorreoPropietario)
+                        </dd>
+                    </row>
+                    </row>               <row>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.vehiculo.TelefonoPropietario):
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.vehiculo.TelefonoPropietario)
+                        </dd>
+                    </row>
+                    <div class="form-group">
+                        <a class="btn btn-primary" asp-page="./Index">Cancelar</a>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </div>
+
+                    <input type="hidden" asp-for="vehiculo.Marca" />
+                    <input type="hidden" asp-for="vehiculo.Modelo" />
+                    <input type="hidden" asp-for="vehiculo.Placa" />
+                    <input type="hidden" asp-for="vehiculo.TelefonoPropietario" />
+                    <input type="hidden" asp-for="vehiculo.CorreoPropietario" />
+                    <input type="hidden" asp-for="vehiculo.Color" />
+                    <input type="hidden" asp-for="vehiculo.Anio" />
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

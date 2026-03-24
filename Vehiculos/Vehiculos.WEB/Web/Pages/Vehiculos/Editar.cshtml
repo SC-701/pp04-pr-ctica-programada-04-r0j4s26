@@ -1,0 +1,105 @@
+﻿@page
+@model Web.Pages.Vehiculos.EditarModel
+@{
+}
+<header class="subhead">
+    <div class="container">
+        <div class="masthead-subheading">SC-701: Programación Web Avanzada</div>
+        <div class="masthead-heading text-uppercase">Ejercicio vehiculo</div>
+    </div>
+</header>
+
+<section class="page-section bg-light" id="principal">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Editar vehiculo</h2>
+            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+        </div>
+
+        <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto ">
+            <form method="post">
+                <div class="form-group">
+                    <label for="marcas">Marca</label>
+                    <select asp-for="marcaSeleccionada" class="form-select" asp-items="Model.marcas" id="marcas" onchange="fetchModelos()">
+                        <option value="">Seleccione una marca</option>
+                    </select>
+                    <span class="text-danger" asp-validation-for="vehiculo.Marca"></span>
+                </div>
+                <div class="form-group">
+                    <label for="modelos">Modelo</label>
+                    <select asp-for="modeloSeleccionado" class="form-select" asp-items="Model.modelos" id="modelos">
+                        <option value="">Seleccione un modelo</option>
+                    </select>
+                    <span class="text-danger" asp-validation-for="vehiculo.Modelo"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="vehiculo.Placa"></label>
+                    <input class="form-control" asp-for="vehiculo.Placa" />
+                    <span class="text-danger" asp-validation-for="vehiculo.Placa"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="vehiculo.Precio"></label>
+                    <input class="form-control" asp-for="vehiculo.Precio" />
+                    <span class="text-danger" asp-validation-for="vehiculo.Precio"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="vehiculo.Anio"></label>
+                    <input class="form-control" asp-for="vehiculo.Anio" />
+                    <span class="text-danger" asp-validation-for="vehiculo.Anio"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="vehiculo.Color"></label>
+                    <input class="form-control" asp-for="vehiculo.Color" />
+                    <span class="text-danger" asp-validation-for="vehiculo.Color"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="vehiculo.CorreoPropietario"></label>
+                    <input class="form-control" asp-for="vehiculo.CorreoPropietario" />
+                    <span class="text-danger" asp-validation-for="vehiculo.CorreoPropietario"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="vehiculo.TelefonoPropietario"></label>
+                    <input class="form-control" asp-for="vehiculo.TelefonoPropietario" />
+                    <span class="text-danger" asp-validation-for="vehiculo.TelefonoPropietario"></span>
+                </div>
+                <div class="text-danger" asp-validation-summary="All"></div>
+                <div class="form-group">
+                    <a class="btn btn-primary" asp-page="./Index">Regresar</a>
+                    <input type="submit" value="Editar" class="btn btn-warning" />
+                </div>
+                <input type="hidden" asp-for="vehiculo.Id" />
+                <input type="hidden" asp-for="modeloSeleccionado" />
+                <input type="hidden" asp-for="marcaSeleccionada" />
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>async function fetchModelos() {
+            const marcaId = document.getElementById('marcas').value;
+            if (!marcaId) {
+                return;
+            }
+            try {
+                const response = await fetch(`?handler=ObtenerModelos&marcaId=${marcaId}`);
+                if (!response.ok) {
+                    throw new Error('Error obteniendo los datos');
+                }
+                const modelos = await response.json();
+                const modelosSelect = document.getElementById('modelos');
+                modelosSelect.innerHTML = '<option value="">Seleccione un modelo</option>';
+                modelos.forEach(modelo => {
+                    const option = document.createElement('option');
+                    option.value = modelo.id;
+                    option.text = modelo.nombre;
+                    modelosSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error obteniendo los datos:', error);
+            }
+        }</script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
